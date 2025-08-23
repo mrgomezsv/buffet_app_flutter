@@ -6,11 +6,7 @@ class ServicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Servicios"),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-      ),
+      appBar: AppBar(title: const Text("Servicios")),
       body: const Center(
         child: Text(
           "Pantalla de Servicios - En Desarrollo",

@@ -22,46 +22,39 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    
+
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    
+
     _scaleController = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
-    
+
     _fadeAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeIn,
-    ));
-    
-    _scaleAnimation = Tween<double>(
-      begin: 0.5,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _scaleController,
-      curve: Curves.elasticOut,
-    ));
-    
+    ).animate(CurvedAnimation(parent: _fadeController, curve: Curves.easeIn));
+
+    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(parent: _scaleController, curve: Curves.elasticOut),
+    );
+
     _startAnimations();
   }
 
   void _startAnimations() async {
     await Future.delayed(const Duration(milliseconds: 500));
-    
+
     if (mounted) {
       _fadeController.forward();
       _scaleController.forward();
     }
-    
+
     await Future.delayed(const Duration(milliseconds: 2500));
-    
+
     if (mounted) {
       _checkAuthStatus();
     }
@@ -70,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen>
   void _checkAuthStatus() async {
     final prefs = await SharedPreferences.getInstance();
     final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-    
+
     if (mounted) {
       if (isLoggedIn) {
         context.go('/home');
@@ -90,10 +83,14 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.orange500,
       body: Container(
         decoration: const BoxDecoration(
-          gradient: AppColors.primaryGradient,
+          gradient: LinearGradient(
+            colors: [AppColors.orange500, AppColors.orange700],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
         child: Center(
           child: Column(
@@ -122,15 +119,15 @@ class _SplashScreenState extends State<SplashScreen>
                       child: const Icon(
                         Icons.restaurant_menu,
                         size: 60,
-                        color: AppColors.primary,
+                        color: AppColors.orange500,
                       ),
                     ),
                   );
                 },
               ),
-              
+
               const SizedBox(height: 40),
-              
+
               // App Name
               AnimatedBuilder(
                 animation: _fadeAnimation,
@@ -149,9 +146,9 @@ class _SplashScreenState extends State<SplashScreen>
                   );
                 },
               ),
-              
+
               const SizedBox(height: 16),
-              
+
               // App Description
               AnimatedBuilder(
                 animation: _fadeAnimation,
@@ -170,9 +167,9 @@ class _SplashScreenState extends State<SplashScreen>
                   );
                 },
               ),
-              
+
               const SizedBox(height: 60),
-              
+
               // Loading Indicator
               AnimatedBuilder(
                 animation: _fadeAnimation,

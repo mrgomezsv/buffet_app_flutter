@@ -32,7 +32,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buttonColor = backgroundColor ?? AppColors.primary;
+    final buttonColor = backgroundColor ?? AppColors.orange500;
     final buttonTextColor = textColor ?? Colors.white;
 
     if (isOutlined) {
@@ -138,7 +138,7 @@ class CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buttonColor = backgroundColor ?? AppColors.primary;
+    final buttonColor = backgroundColor ?? AppColors.orange500;
     final buttonIconColor = iconColor ?? Colors.white;
 
     return SizedBox(
