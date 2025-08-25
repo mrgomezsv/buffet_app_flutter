@@ -17,6 +17,10 @@ class AppColors {
   static const Color underline = Color(0xFFaba7a7);
   static const Color error = Color(0xFFDC3545);
 
+  // Text Colors
+  static const Color textPrimary = black;
+  static const Color textSecondary = gris;
+
   // Mantener compatibilidad con nombres anteriores
   static const Color purple500 = orange500;
   static const Color purple700 = orange700;

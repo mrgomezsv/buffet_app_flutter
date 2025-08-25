@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
+import '../../services/auth_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -61,13 +61,20 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _checkAuthStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    try {
+      final authService = AuthService();
+      final isLoggedIn = await authService.isUserLoggedIn();
 
-    if (mounted) {
-      if (isLoggedIn) {
-        context.go('/home');
-      } else {
+      if (mounted) {
+        if (isLoggedIn) {
+          context.go('/home');
+        } else {
+          context.go('/login');
+        }
+      }
+    } catch (e) {
+      // Si hay algún error, ir al login
+      if (mounted) {
         context.go('/login');
       }
     }
@@ -110,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen>
                         borderRadius: BorderRadius.circular(60),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
+                            color: Colors.black.withValues(alpha: 0.2),
                             blurRadius: 20,
                             offset: const Offset(0, 10),
                           ),

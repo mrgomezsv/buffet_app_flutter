@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
+import '../../providers/auth_providers.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/custom_button.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -37,22 +40,62 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      // Simular delay de login
-      await Future.delayed(const Duration(seconds: 2));
+      final authService = ref.read(authServiceProvider);
+      final success = await authService.signInWithEmailAndPassword(
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+      );
 
-      // Guardar estado de login
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-      await prefs.setString('userEmail', _emailController.text);
+      if (success && mounted) {
+        // Guardar preferencia local
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
 
-      if (mounted) {
-        context.go('/home');
+        if (mounted) {
+          context.go('/home');
+        }
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error: ${e.toString()}'),
+            content: Text(e.toString()),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _signInWithGoogle() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final authService = ref.read(authServiceProvider);
+      await authService.signInWithGoogle();
+
+      if (mounted) {
+        // Guardar preferencia local
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+
+        if (mounted) {
+          context.go('/home');
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
             backgroundColor: AppColors.error,
           ),
         );
@@ -79,8 +122,6 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 60),
-
-                // Logo y título
                 Center(
                   child: Column(
                     children: [
@@ -88,13 +129,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 100,
                         height: 100,
                         decoration: BoxDecoration(
-                          color: AppColors.orange500,
-                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.orange500.withOpacity(0.3),
-                              blurRadius: 20,
-                              offset: const Offset(0, 10),
+                              color: Colors.black.withValues(alpha: 0.1),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
                             ),
                           ],
                         ),
@@ -107,22 +148,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 24),
                       Text(
                         AppStrings.welcomeMessage,
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Inicia sesión para continuar',
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 48),
-
-                // Campo de email
                 CustomTextField(
                   controller: _emailController,
                   labelText: AppStrings.email,
@@ -130,21 +175,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   prefixIcon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppStrings.requiredField;
-                    }
-                    if (!RegExp(
-                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                    ).hasMatch(value)) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        !RegExp(
+                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                        ).hasMatch(value)) {
                       return 'Por favor ingresa un email válido';
                     }
                     return null;
                   },
                 ),
-
                 const SizedBox(height: 20),
-
-                // Campo de contraseña
                 CustomTextField(
                   controller: _passwordController,
                   labelText: AppStrings.password,
@@ -168,16 +209,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (value == null || value.isEmpty) {
                       return AppStrings.requiredField;
                     }
-                    if (value.length < 6) {
-                      return AppStrings.passwordTooShort;
-                    }
                     return null;
                   },
                 ),
-
                 const SizedBox(height: 20),
-
-                // Recordar contraseña y olvidé contraseña
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -194,13 +229,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         Text(
                           'Recordarme',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: AppColors.textSecondary),
                         ),
                       ],
                     ),
                     TextButton(
                       onPressed: () {
-                        // Navegar a pantalla de recuperar contraseña
+                        // TODO: Implementar recuperación de contraseña
                       },
                       child: Text(
                         AppStrings.forgotPassword,
@@ -212,19 +248,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 32),
-
-                // Botón de login
                 CustomButton(
                   onPressed: _isLoading ? null : _handleLogin,
                   text: _isLoading ? AppStrings.loading : AppStrings.login,
                   isLoading: _isLoading,
                 ),
-
                 const SizedBox(height: 24),
-
-                // Separador
                 Row(
                   children: [
                     Expanded(child: Divider(color: Colors.grey.shade300)),
@@ -232,40 +262,48 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         'o',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyMedium?.copyWith(color: AppColors.gris),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                     ),
                     Expanded(child: Divider(color: Colors.grey.shade300)),
                   ],
                 ),
-
                 const SizedBox(height: 24),
-
-                // Botón de registro
-                OutlinedButton(
-                  onPressed: () {
-                    context.go('/register');
-                  },
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: BorderSide(color: AppColors.orange500),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: Text(
-                    AppStrings.register,
-                    style: TextStyle(
-                      color: AppColors.orange500,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                CustomButton(
+                  onPressed: _isLoading ? null : _signInWithGoogle,
+                  text: 'Continuar con Google',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                  isOutlined: true,
+                  icon: SvgPicture.asset(
+                    'assets/images/ic_google.xml',
+                    height: 24,
                   ),
                 ),
-
-                const SizedBox(height: 40),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '¿No tienes una cuenta?',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => context.go('/register'),
+                      child: Text(
+                        AppStrings.register,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.orange500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

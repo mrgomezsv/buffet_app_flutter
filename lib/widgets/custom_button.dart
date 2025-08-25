@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
   final double? width;
   final double height;
   final double borderRadius;
-  final IconData? icon;
+  final Widget? icon;
   final bool isOutlined;
   final EdgeInsetsGeometry? padding;
 
@@ -62,7 +62,7 @@ class CustomButton extends StatelessWidget {
           backgroundColor: buttonColor,
           foregroundColor: buttonTextColor,
           elevation: 2,
-          shadowColor: buttonColor.withOpacity(0.3),
+          shadowColor: buttonColor.withValues(alpha: 0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
@@ -87,10 +87,10 @@ class CustomButton extends StatelessWidget {
 
     if (icon != null) {
       return Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 20),
-          const SizedBox(width: 8),
+          icon!,
+          const SizedBox(width: 12),
           Text(
             text,
             style: TextStyle(
@@ -150,7 +150,7 @@ class CustomIconButton extends StatelessWidget {
           backgroundColor: buttonColor,
           foregroundColor: buttonIconColor,
           elevation: 2,
-          shadowColor: buttonColor.withOpacity(0.3),
+          shadowColor: buttonColor.withValues(alpha: 0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
