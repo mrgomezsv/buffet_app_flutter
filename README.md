@@ -1,77 +1,55 @@
-# Buffet App - Flutter Version
+# Buffet App - Flutter
 
-## Descripción
+Una aplicación móvil moderna desarrollada en Flutter que replica la funcionalidad y diseño de la aplicación Android original de Buffet.
 
-Esta es la versión Flutter del proyecto Buffet App, migrado desde la versión original en Kotlin/Android. La aplicación mantiene toda la funcionalidad, estilos y lógica del proyecto original, pero ahora implementada en Flutter para mayor flexibilidad y compatibilidad multiplataforma.
+## 🎯 Características Principales
 
-## Características
+### 🏠 Pantalla Principal (Home)
+- **Image Slider**: Banner rotativo con imágenes promocionales
+- **Bottom Navigation**: Navegación entre 4 secciones principales
+- **Fragmentos Dinámicos**: Contenido que cambia según la selección del usuario
 
-- 🍽️ **Gestión de Menús**: Buffet, Almuerzo, Snacks, Antojitos
-- 👥 **Sistema de Usuarios**: Registro, login y perfiles
-- 📱 **UI Moderna**: Diseño Material 3 con animaciones fluidas
-- 🔄 **Estado Reactivo**: Gestión de estado con Riverpod
-- 🎨 **Tema Personalizado**: Colores y estilos consistentes
-- 📱 **Responsive**: Adaptable a diferentes tamaños de pantalla
-- 🔐 **Autenticación**: Sistema de login seguro
-- 💾 **Almacenamiento Local**: SharedPreferences y SQLite
-- 🌐 **Navegación**: Routing con GoRouter
+### 🍽️ Secciones de la Aplicación
 
-## Estructura del Proyecto
+#### 1. Almuerzos (Lunch)
+- Grid de menús con tarjetas atractivas
+- Información detallada de cada plato
+- Precios y categorías claramente visibles
 
-```
-lib/
-├── constants/           # Constantes de la aplicación
-│   ├── app_colors.dart
-│   └── app_strings.dart
-├── models/             # Modelos de datos
-│   ├── menu_producto.dart
-│   ├── antojitos_producto.dart
-│   ├── buffet.dart
-│   ├── lunch.dart
-│   ├── snack.dart
-│   ├── news.dart
-│   └── user.dart
-├── views/              # Pantallas de la aplicación
-│   ├── auth/           # Autenticación
-│   ├── home/           # Pantalla principal
-│   ├── menu/           # Gestión de menús
-│   ├── profile/        # Perfil de usuario
-│   └── services/       # Servicios disponibles
-├── widgets/            # Widgets personalizados
-│   ├── custom_button.dart
-│   └── custom_text_field.dart
-├── controllers/        # Controladores de estado
-├── services/           # Servicios y APIs
-└── utils/              # Utilidades y helpers
-```
+#### 2. Antojitos (Snacks)
+- Variedad de opciones de aperitivos
+- Diseño consistente con el resto de la app
+- Navegación intuitiva
 
-## Tecnologías Utilizadas
+#### 3. Buffet (Servicios)
+- Catálogo de servicios especiales
+- Imágenes de portada para cada categoría
+- Botones de acción para cada servicio
 
-- **Flutter**: Framework principal
-- **Dart**: Lenguaje de programación
-- **Riverpod**: Gestión de estado
-- **GoRouter**: Navegación
-- **SharedPreferences**: Almacenamiento local
-- **SQLite**: Base de datos local
-- **HTTP/Dio**: Cliente HTTP
-- **Cached Network Image**: Carga de imágenes
-- **Firebase**: Autenticación y base de datos (opcional)
+#### 4. Mi Perfil
+- Información del usuario
+- Configuraciones de la aplicación
+- Opciones de seguridad y privacidad
 
-## Instalación
+### 🎨 Diseño y UI
+- **Colores**: Paleta naranja consistente con la marca
+- **Tipografía**: Fuentes legibles y jerarquía visual clara
+- **Componentes**: Tarjetas, botones y elementos reutilizables
+- **Responsive**: Adaptable a diferentes tamaños de pantalla
+
+## 🚀 Instalación y Configuración
 
 ### Prerrequisitos
-
-- Flutter SDK (versión 3.7.2 o superior)
+- Flutter SDK 3.7.2 o superior
 - Dart SDK
-- Android Studio / VS Code
-- Emulador Android o dispositivo físico
+- Android Studio / Xcode (para desarrollo móvil)
 
 ### Pasos de Instalación
 
 1. **Clonar el repositorio**
    ```bash
    git clone <repository-url>
-   cd buffet_flutter/buffet_app
+   cd buffet_app
    ```
 
 2. **Instalar dependencias**
@@ -84,160 +62,119 @@ lib/
    flutter run
    ```
 
-## Configuración
+## 📱 Estructura del Proyecto
 
-### Variables de Entorno
-
-Crear un archivo `.env` en la raíz del proyecto:
-
-```env
-API_BASE_URL=https://api.buffetapp.com
-FIREBASE_PROJECT_ID=your-project-id
+```
+lib/
+├── config/           # Configuraciones de la aplicación
+├── constants/        # Constantes, colores y strings
+├── controllers/      # Controladores de lógica de negocio
+├── models/          # Modelos de datos
+├── providers/       # Proveedores de estado
+├── services/        # Servicios y APIs
+├── utils/           # Utilidades y helpers
+├── views/           # Pantallas de la aplicación
+│   ├── auth/        # Autenticación
+│   ├── home/        # Pantalla principal
+│   ├── menu/        # Catálogo de menús
+│   ├── profile/     # Perfil del usuario
+│   └── services/    # Servicios y error de red
+├── widgets/         # Widgets reutilizables
+└── main.dart        # Punto de entrada
 ```
 
-### Firebase (Opcional)
+## 🎯 Templates Implementados
 
-Si deseas usar Firebase:
+### Basados en el Proyecto Android Original
 
-1. Crear proyecto en Firebase Console
-2. Descargar `google-services.json` (Android) y `GoogleService-Info.plist` (iOS)
-3. Colocar en las carpetas correspondientes
-4. Habilitar Authentication y Firestore
+1. **Home Screen** (`activity_home.xml`)
+   - Image slider con banner promocional
+   - Bottom navigation con 4 tabs
+   - Fragment container para contenido dinámico
 
-## Funcionalidades Principales
+2. **Network Error Screen** (`activity_main_network.xml`)
+   - Pantalla de error cuando no hay conexión
+   - Imagen ilustrativa y mensaje claro
+   - Botón de reintento
 
-### 1. Autenticación
-- Login con email y contraseña
-- Registro de nuevos usuarios
-- Recuperación de contraseña
-- Sesiones persistentes
+3. **Services Screen** (`activity_our_services.xml`)
+   - Catálogo de servicios con imágenes
+   - Descripciones detalladas
+   - Botones de acción para cada servicio
 
-### 2. Gestión de Menús
-- **Buffet**: Menús completos para eventos
-- **Lunch**: Opciones de almuerzo
-- **Snacks**: Aperitivos y bocadillos
-- **Antojitos**: Comida rápida y tradicional
+4. **Menu Screen** (`tarjeta_menus.xml`)
+   - Tarjetas de menú con gradientes
+   - Información completa de cada plato
+   - Filtros por categoría
 
-### 3. Sistema de Usuarios
-- Perfiles personalizables
-- Historial de pedidos
-- Preferencias de usuario
-- Configuraciones de la aplicación
+5. **Profile Screen** (basado en `ProfileFragment.kt`)
+   - Información del usuario
+   - Opciones de configuración
+   - Gestión de seguridad y privacidad
 
-### 4. Servicios
-- Catering para eventos
-- Renta de cristalería
-- Organización de bodas
-- Eventos corporativos
+## 🔧 Dependencias Principales
 
-## Arquitectura
+- **carousel_slider**: Para el banner rotativo
+- **go_router**: Navegación entre pantallas
+- **flutter_riverpod**: Gestión de estado
+- **shared_preferences**: Almacenamiento local
+- **cached_network_image**: Carga de imágenes optimizada
 
-La aplicación sigue el patrón **MVVM** (Model-View-ViewModel) con Riverpod para la gestión de estado:
+## 🎨 Paleta de Colores
 
-- **Models**: Clases de datos inmutables
-- **Views**: Widgets de UI
-- **Controllers**: Lógica de negocio y estado
-- **Services**: Acceso a datos y APIs
-- **Providers**: Gestión de estado con Riverpod
+```dart
+class AppColors {
+  static const Color orange500 = Color(0xFFdb9323);    // Color principal
+  static const Color orange700 = Color(0xFFa46500);    // Color secundario
+  static const Color background = Color(0xFFFFF8CE);   // Fondo principal
+  static const Color background2 = Color(0xFFFAFBF6);  // Fondo secundario
+  static const Color gris = Color(0xFF707070);         // Texto secundario
+  static const Color black = Color(0xFF000000);        // Texto principal
+  static const Color white = Color(0xFFFFFFFF);        // Texto sobre naranja
+}
+```
 
-## Navegación
+## 📱 Navegación
 
 La aplicación utiliza GoRouter para la navegación entre pantallas:
 
-- `/` - Splash Screen
-- `/login` - Pantalla de login
-- `/register` - Registro de usuario
-- `/home` - Pantalla principal
-- `/menu` - Gestión de menús
-- `/services` - Servicios disponibles
-- `/profile` - Perfil de usuario
+- `/` → Splash Screen
+- `/login` → Pantalla de login
+- `/register` → Pantalla de registro
+- `/home` → Pantalla principal con tabs
+- `/menu` → Catálogo de menús
+- `/services` → Servicios disponibles
+- `/profile` → Perfil del usuario
+- `/network-error` → Pantalla de error de red
 
-## Temas y Estilos
+## 🚀 Próximas Mejoras
 
-### Colores Principales
-- **Primary**: Azul (#1976D2)
-- **Secondary**: Naranja (#FF9800)
-- **Accent**: Verde (#4CAF50)
-- **Background**: Gris claro (#FAFAFA)
+- [ ] Integración con Firebase
+- [ ] Autenticación de usuarios
+- [ ] Base de datos local
+- [ ] Notificaciones push
+- [ ] Modo offline
+- [ ] Tests unitarios y de widgets
+- [ ] Internacionalización (i18n)
 
-### Tipografías
-- **Headlines**: Roboto Bold
-- **Body**: Roboto Regular
-- **Captions**: Roboto Light
-
-## Testing
-
-```bash
-# Ejecutar tests unitarios
-flutter test
-
-# Ejecutar tests de integración
-flutter test integration_test/
-
-# Generar reporte de cobertura
-flutter test --coverage
-```
-
-## Build y Deploy
-
-### Android
-```bash
-# Build APK
-flutter build apk
-
-# Build App Bundle
-flutter build appbundle
-
-# Build para release
-flutter build apk --release
-```
-
-### iOS
-```bash
-# Build para iOS
-flutter build ios
-
-# Build para release
-flutter build ios --release
-```
-
-## Contribución
+## 🤝 Contribución
 
 1. Fork el proyecto
-2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
 3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
 4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abrir un Pull Request
+5. Abre un Pull Request
 
-## Licencia
+## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
-## Contacto
+## 📞 Contacto
 
-- **Desarrollador**: Mario Roberto Gomez Martinez
-- **Email**: [tu-email@ejemplo.com]
-- **Proyecto**: [URL del repositorio]
-
-## Changelog
-
-### v1.0.0
-- Migración completa desde Kotlin a Flutter
-- Implementación de todas las funcionalidades principales
-- UI moderna con Material 3
-- Sistema de navegación con GoRouter
-- Gestión de estado con Riverpod
-
-## Roadmap
-
-- [ ] Implementación de notificaciones push
-- [ ] Integración con servicios de pago
-- [ ] Modo offline completo
-- [ ] Soporte para múltiples idiomas
-- [ ] Widgets para Android
-- [ ] Versión web
-- [ ] Integración con wearables
+- **Desarrollador**: Mario Gómez
+- **Email**: mrgomez@example.com
+- **Proyecto**: [Buffet App Flutter](https://github.com/username/buffet_app)
 
 ---
 
-**Nota**: Este proyecto es una migración completa desde la versión original en Kotlin. Todas las funcionalidades, estilos y lógica de negocio han sido preservadas y adaptadas al ecosistema Flutter.
+**Nota**: Esta aplicación es una versión Flutter del proyecto Android original, manteniendo la misma funcionalidad y diseño visual pero con las ventajas de Flutter como framework multiplataforma.

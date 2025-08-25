@@ -11,6 +11,7 @@ import 'views/auth/register_screen.dart';
 import 'views/home/home_screen.dart';
 import 'views/profile/profile_screen.dart';
 import 'views/services/services_screen.dart';
+import 'views/services/network_error_screen.dart';
 import 'views/menu/menu_screen.dart';
 import 'views/splash_screen.dart';
 
@@ -109,6 +110,10 @@ final _router = GoRouter(
     GoRoute(
       path: '/profile',
       builder: (context, state) => const ProfileScreen(),
+    ),
+    GoRoute(
+      path: '/network-error',
+      builder: (context, state) => const NetworkErrorScreen(),
     ),
   ],
 );

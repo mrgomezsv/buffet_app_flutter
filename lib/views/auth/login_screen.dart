@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_colors.dart';
@@ -9,6 +8,7 @@ import '../../constants/app_strings.dart';
 import '../../providers/auth_providers.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/google_sign_in_button.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -139,10 +139,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ),
                           ],
                         ),
-                        child: const Icon(
-                          Icons.restaurant_menu,
-                          size: 50,
-                          color: Colors.white,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.asset(
+                            'assets/images/icon_buffet.png',
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -235,9 +239,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ],
                     ),
                     TextButton(
-                      onPressed: () {
-                        // TODO: Implementar recuperación de contraseña
-                      },
+                      onPressed: () => context.go('/forgot-password'),
                       child: Text(
                         AppStrings.forgotPassword,
                         style: TextStyle(
@@ -271,16 +273,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ],
                 ),
                 const SizedBox(height: 24),
-                CustomButton(
+                // Botón de Google con UI oficial estándar
+                GoogleSignInButton(
                   onPressed: _isLoading ? null : _signInWithGoogle,
-                  text: 'Continuar con Google',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
-                  isOutlined: true,
-                  icon: SvgPicture.asset(
-                    'assets/images/ic_google.xml',
-                    height: 24,
-                  ),
+                  style: GoogleButtonStyle.light, // Blanco con borde gris
                 ),
                 const SizedBox(height: 24),
                 Row(

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 // import 'package:firebase_auth/firebase_auth.dart';  // Comentado temporalmente
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
 import '../../providers/auth_providers.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/google_sign_in_button.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -209,16 +209,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ],
                 ),
                 const SizedBox(height: 24),
-                CustomButton(
+                GoogleSignInButton(
                   onPressed: _isLoading ? null : _signInWithGoogle,
-                  text: 'Continuar con Google',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
-                  isOutlined: true,
-                  icon: SvgPicture.asset(
-                    'assets/images/ic_google.xml',
-                    height: 24,
-                  ),
+                  style: GoogleButtonStyle.light, // Blanco con borde gris
                 ),
                 const SizedBox(height: 32),
                 Row(
