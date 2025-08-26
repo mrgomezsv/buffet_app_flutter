@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:go_router/go_router.dart';
 import '../../constants/app_colors.dart';
 import '../../widgets/menu_card_widget.dart';
-import '../../widgets/neumorphic_container.dart';
+import '../../widgets/glassmorphism_container.dart';
 import '../../models/menu_producto.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -82,75 +82,80 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            // Image Slider
-            Container(
-              margin: const EdgeInsets.only(
-                left: 10,
-                right: 10,
-                bottom: 10,
-                top: 30,
-              ),
-              child: NeumorphicCard(
-                borderRadius: 10,
-                backgroundColor: AppColors.background,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: SizedBox(
-                    height: 200,
-                    child: PageView.builder(
-                      controller: _pageController,
-                      onPageChanged: (index) {
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                      },
-                      itemCount: sliderImages.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(sliderImages[index]),
-                              fit: BoxFit.cover,
+      body: GlassmorphismBackground(
+        child: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              // Image Slider
+              Container(
+                margin: const EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                  bottom: 10,
+                  top: 30,
+                ),
+                child: GlassmorphismCard(
+                  borderRadius: 16,
+                  backgroundColor: Colors.white,
+                  blur: 20,
+                  opacity: 0.1,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: SizedBox(
+                      height: 200,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentIndex = index;
+                          });
+                        },
+                        itemCount: sliderImages.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(sliderImages[index]),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
 
-            // Indicadores de página
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                sliderImages.length,
-                (index) => NeumorphicContainer(
-                  borderRadius: 50,
-                  width: 12,
-                  height: 12,
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  backgroundColor:
-                      _currentIndex == index
-                          ? AppColors.orange500
-                          : AppColors.gris.withAlpha(77),
-                  child: Container(),
+              // Indicadores de página
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  sliderImages.length,
+                  (index) => GlassmorphismContainer(
+                    borderRadius: 50,
+                    width: 12,
+                    height: 12,
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    backgroundColor:
+                        _currentIndex == index
+                            ? AppColors.orange500
+                            : AppColors.gris.withAlpha(77),
+                    blur: 8,
+                    opacity: _currentIndex == index ? 0.3 : 0.1,
+                    child: Container(),
+                  ),
                 ),
               ),
-            ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // Fragment Container
-            Expanded(child: _fragments[_selectedTabIndex]),
-          ],
+              // Fragment Container
+              Expanded(child: _fragments[_selectedTabIndex]),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -382,18 +387,22 @@ class BuffetFragment extends StatelessWidget {
     String imagePath,
     String buttonText,
   ) {
-    return NeumorphicCard(
-      borderRadius: 16,
-      backgroundColor: AppColors.background,
+    return GlassmorphismCard(
+      borderRadius: 20,
+      backgroundColor: Colors.white,
+      blur: 15,
+      opacity: 0.12,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            NeumorphicContainer(
-              borderRadius: 12,
-              backgroundColor: AppColors.background,
+            GlassmorphismContainer(
+              borderRadius: 16,
+              backgroundColor: Colors.white,
+              blur: 10,
+              opacity: 0.08,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(16),
                 child: Image.asset(
                   imagePath,
                   height: 120,
@@ -402,32 +411,35 @@ class BuffetFragment extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             Text(
               title,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: AppColors.black,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             Text(
               description,
               style: const TextStyle(fontSize: 16, color: AppColors.gris),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
-            NeumorphicButton(
-              borderRadius: 8,
+            const SizedBox(height: 20),
+            GlassmorphismButton(
+              borderRadius: 12,
               backgroundColor: AppColors.orange500,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+              blur: 12,
+              opacity: 0.25,
               onPressed: () {},
               child: Text(
                 buttonText,
                 style: const TextStyle(
                   color: AppColors.white,
                   fontWeight: FontWeight.w600,
+                  fontSize: 16,
                 ),
               ),
             ),
@@ -448,11 +460,13 @@ class ProfileFragment extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          NeumorphicContainer(
+          GlassmorphismContainer(
             borderRadius: 60,
             width: 120,
             height: 120,
-            backgroundColor: AppColors.background,
+            backgroundColor: Colors.white,
+            blur: 15,
+            opacity: 0.1,
             child: CircleAvatar(
               radius: 60,
               backgroundImage: const AssetImage(
@@ -495,10 +509,12 @@ class ProfileFragment extends StatelessWidget {
           const SizedBox(height: 40),
           SizedBox(
             width: double.infinity,
-            child: NeumorphicButton(
-              borderRadius: 12,
+            child: GlassmorphismButton(
+              borderRadius: 16,
               backgroundColor: AppColors.error,
               padding: const EdgeInsets.symmetric(vertical: 16),
+              blur: 12,
+              opacity: 0.25,
               onPressed: () {
                 context.go('/login');
               },
@@ -524,17 +540,22 @@ class ProfileFragment extends StatelessWidget {
     String subtitle,
     VoidCallback onTap,
   ) {
-    return NeumorphicCard(
-      margin: const EdgeInsets.only(bottom: 12),
-      borderRadius: 12,
-      backgroundColor: AppColors.background,
+    return GlassmorphismCard(
+      margin: const EdgeInsets.only(bottom: 16),
+      borderRadius: 16,
+      backgroundColor: Colors.white,
+      blur: 12,
+      opacity: 0.1,
       onTap: onTap,
       child: ListTile(
-        leading: NeumorphicContainer(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        leading: GlassmorphismContainer(
           borderRadius: 50,
           backgroundColor: AppColors.orange500,
           width: 50,
           height: 50,
+          blur: 8,
+          opacity: 0.3,
           child: Icon(icon, color: AppColors.white, size: 24),
         ),
         title: Text(
@@ -545,7 +566,7 @@ class ProfileFragment extends StatelessWidget {
           subtitle,
           style: const TextStyle(color: AppColors.gris, fontSize: 14),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios),
+        trailing: const Icon(Icons.arrow_forward_ios, color: AppColors.gris),
       ),
     );
   }

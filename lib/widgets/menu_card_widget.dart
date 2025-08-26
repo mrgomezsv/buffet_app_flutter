@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../models/menu_producto.dart';
-import 'neumorphic_container.dart';
+import 'glassmorphism_container.dart';
 
 class MenuCardWidget extends StatelessWidget {
   final MenuProducto menuItem;
@@ -19,10 +19,12 @@ class MenuCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeumorphicCard(
+    return GlassmorphismCard(
       margin: const EdgeInsets.only(bottom: 16),
       borderRadius: 20,
       backgroundColor: AppColors.orange500,
+      blur: 15,
+      opacity: 0.2,
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
@@ -38,11 +40,13 @@ class MenuCardWidget extends StatelessWidget {
           child: Row(
             children: [
               // Icono del menú
-              NeumorphicContainer(
+              GlassmorphismContainer(
                 borderRadius: 12,
-                backgroundColor: AppColors.white.withOpacity(0.2),
+                backgroundColor: AppColors.white,
                 width: 60,
                 height: 60,
+                blur: 8,
+                opacity: 0.2,
                 child: Icon(
                   Icons.restaurant_menu,
                   size: 40,
@@ -83,13 +87,15 @@ class MenuCardWidget extends StatelessWidget {
                       Row(
                         children: [
                           if (showCategory) ...[
-                            NeumorphicContainer(
+                            GlassmorphismContainer(
                               borderRadius: 12,
-                              backgroundColor: AppColors.white.withOpacity(0.2),
+                              backgroundColor: AppColors.white,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8,
                                 vertical: 4,
                               ),
+                              blur: 6,
+                              opacity: 0.2,
                               child: Text(
                                 menuItem.category,
                                 style: const TextStyle(
@@ -133,9 +139,11 @@ class MenuGridCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeumorphicCard(
+    return GlassmorphismCard(
       borderRadius: 20,
       backgroundColor: AppColors.orange500,
+      blur: 15,
+      opacity: 0.2,
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
@@ -153,11 +161,13 @@ class MenuGridCardWidget extends StatelessWidget {
             children: [
               // Icono del menú
               Center(
-                child: NeumorphicContainer(
+                child: GlassmorphismContainer(
                   borderRadius: 12,
-                  backgroundColor: AppColors.white.withOpacity(0.2),
+                  backgroundColor: AppColors.white,
                   width: 60,
                   height: 60,
+                  blur: 8,
+                  opacity: 0.2,
                   child: Icon(
                     Icons.restaurant_menu,
                     size: 40,
@@ -199,13 +209,15 @@ class MenuGridCardWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  NeumorphicContainer(
+                  GlassmorphismContainer(
                     borderRadius: 12,
-                    backgroundColor: AppColors.white.withOpacity(0.2),
+                    backgroundColor: AppColors.white,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
                       vertical: 4,
                     ),
+                    blur: 6,
+                    opacity: 0.2,
                     child: Text(
                       menuItem.category,
                       style: const TextStyle(
