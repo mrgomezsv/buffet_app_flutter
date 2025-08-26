@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:go_router/go_router.dart';
 import '../../constants/app_colors.dart';
 import '../../widgets/menu_card_widget.dart';
+import '../../widgets/neumorphic_container.dart';
 import '../../models/menu_producto.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -94,11 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 bottom: 10,
                 top: 30,
               ),
-              child: Card(
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+              child: NeumorphicCard(
+                borderRadius: 10,
+                backgroundColor: AppColors.background,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: SizedBox(
@@ -133,17 +132,16 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
                 sliderImages.length,
-                (index) => Container(
-                  width: 8,
-                  height: 8,
+                (index) => NeumorphicContainer(
+                  borderRadius: 50,
+                  width: 12,
+                  height: 12,
                   margin: const EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color:
-                        _currentIndex == index
-                            ? AppColors.orange500
-                            : AppColors.gris.withAlpha(77),
-                  ),
+                  backgroundColor:
+                      _currentIndex == index
+                          ? AppColors.orange500
+                          : AppColors.gris.withAlpha(77),
+                  child: Container(),
                 ),
               ),
             ),
@@ -384,20 +382,24 @@ class BuffetFragment extends StatelessWidget {
     String imagePath,
     String buttonText,
   ) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    return NeumorphicCard(
+      borderRadius: 16,
+      backgroundColor: AppColors.background,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                imagePath,
-                height: 120,
-                width: double.infinity,
-                fit: BoxFit.cover,
+            NeumorphicContainer(
+              borderRadius: 12,
+              backgroundColor: AppColors.background,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  imagePath,
+                  height: 120,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -416,16 +418,18 @@ class BuffetFragment extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
+            NeumorphicButton(
+              borderRadius: 8,
+              backgroundColor: AppColors.orange500,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.orange500,
-                foregroundColor: AppColors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+              child: Text(
+                buttonText,
+                style: const TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              child: Text(buttonText),
             ),
           ],
         ),
@@ -444,9 +448,17 @@ class ProfileFragment extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          const CircleAvatar(
-            radius: 60,
-            backgroundImage: AssetImage('assets/images/facebook_avatar.png'),
+          NeumorphicContainer(
+            borderRadius: 60,
+            width: 120,
+            height: 120,
+            backgroundColor: AppColors.background,
+            child: CircleAvatar(
+              radius: 60,
+              backgroundImage: const AssetImage(
+                'assets/images/facebook_avatar.png',
+              ),
+            ),
           ),
           const SizedBox(height: 20),
           Text(
@@ -483,18 +495,20 @@ class ProfileFragment extends StatelessWidget {
           const SizedBox(height: 40),
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
+            child: NeumorphicButton(
+              borderRadius: 12,
+              backgroundColor: AppColors.error,
+              padding: const EdgeInsets.symmetric(vertical: 16),
               onPressed: () {
                 context.go('/login');
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.error,
-                foregroundColor: AppColors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-              ),
               child: const Text(
                 'Cerrar Sesión',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.white,
+                ),
               ),
             ),
           ),
@@ -510,10 +524,19 @@ class ProfileFragment extends StatelessWidget {
     String subtitle,
     VoidCallback onTap,
   ) {
-    return Card(
+    return NeumorphicCard(
       margin: const EdgeInsets.only(bottom: 12),
+      borderRadius: 12,
+      backgroundColor: AppColors.background,
+      onTap: onTap,
       child: ListTile(
-        leading: Icon(icon, color: AppColors.orange500, size: 28),
+        leading: NeumorphicContainer(
+          borderRadius: 50,
+          backgroundColor: AppColors.orange500,
+          width: 50,
+          height: 50,
+          child: Icon(icon, color: AppColors.white, size: 24),
+        ),
         title: Text(
           title,
           style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
@@ -523,7 +546,6 @@ class ProfileFragment extends StatelessWidget {
           style: const TextStyle(color: AppColors.gris, fontSize: 14),
         ),
         trailing: const Icon(Icons.arrow_forward_ios),
-        onTap: onTap,
       ),
     );
   }

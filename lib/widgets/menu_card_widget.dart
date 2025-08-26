@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../models/menu_producto.dart';
+import 'neumorphic_container.dart';
 
 class MenuCardWidget extends StatelessWidget {
   final MenuProducto menuItem;
@@ -18,111 +19,104 @@ class MenuCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return NeumorphicCard(
       margin: const EdgeInsets.only(bottom: 16),
-      elevation: 6,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [AppColors.orange500, AppColors.orange700],
-            ),
+      borderRadius: 20,
+      backgroundColor: AppColors.orange500,
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppColors.orange500, AppColors.orange700],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                // Icono del menú
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: AppColors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(
-                    Icons.restaurant_menu,
-                    size: 40,
-                    color: AppColors.white,
-                  ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              // Icono del menú
+              NeumorphicContainer(
+                borderRadius: 12,
+                backgroundColor: AppColors.white.withOpacity(0.2),
+                width: 60,
+                height: 60,
+                child: Icon(
+                  Icons.restaurant_menu,
+                  size: 40,
+                  color: AppColors.white,
                 ),
+              ),
 
-                const SizedBox(width: 16),
+              const SizedBox(width: 16),
 
-                // Información del menú
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        menuItem.name,
-                        style: const TextStyle(
-                          color: AppColors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+              // Información del menú
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      menuItem.name,
+                      style: const TextStyle(
+                        color: AppColors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      menuItem.description,
+                      style: TextStyle(
+                        color: AppColors.white.withOpacity(0.9),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (showCategory || showPrice) ...[
                       const SizedBox(height: 8),
-                      Text(
-                        menuItem.description,
-                        style: TextStyle(
-                          color: AppColors.white.withOpacity(0.9),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (showCategory || showPrice) ...[
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            if (showCategory) ...[
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.white.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  menuItem.category,
-                                  style: const TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
+                      Row(
+                        children: [
+                          if (showCategory) ...[
+                            NeumorphicContainer(
+                              borderRadius: 12,
+                              backgroundColor: AppColors.white.withOpacity(0.2),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
                               ),
-                              if (showPrice) const Spacer(),
-                            ],
-                            if (showPrice)
-                              Text(
-                                '\$${menuItem.price.toStringAsFixed(2)}',
+                              child: Text(
+                                menuItem.category,
                                 style: const TextStyle(
                                   color: AppColors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
+                            ),
+                            if (showPrice) const Spacer(),
                           ],
-                        ),
-                      ],
+                          if (showPrice)
+                            Text(
+                              '\$${menuItem.price.toStringAsFixed(2)}',
+                              style: const TextStyle(
+                                color: AppColors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                        ],
+                      ),
                     ],
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -139,106 +133,99 @@ class MenuGridCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [AppColors.orange500, AppColors.orange700],
-            ),
+    return NeumorphicCard(
+      borderRadius: 20,
+      backgroundColor: AppColors.orange500,
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppColors.orange500, AppColors.orange700],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Icono del menú
-                Center(
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      Icons.restaurant_menu,
-                      size: 40,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Título del menú
-                Text(
-                  menuItem.name,
-                  style: const TextStyle(
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Icono del menú
+              Center(
+                child: NeumorphicContainer(
+                  borderRadius: 12,
+                  backgroundColor: AppColors.white.withOpacity(0.2),
+                  width: 60,
+                  height: 60,
+                  child: Icon(
+                    Icons.restaurant_menu,
+                    size: 40,
                     color: AppColors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                 ),
+              ),
 
-                const SizedBox(height: 8),
+              const SizedBox(height: 16),
 
-                // Descripción
-                Text(
-                  menuItem.description,
-                  style: TextStyle(
-                    color: AppColors.white.withOpacity(0.9),
-                    fontSize: 14,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+              // Título del menú
+              Text(
+                menuItem.name,
+                style: const TextStyle(
+                  color: AppColors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
 
-                const Spacer(),
+              const SizedBox(height: 8),
 
-                // Precio
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        menuItem.category,
-                        style: const TextStyle(
-                          color: AppColors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+              // Descripción
+              Text(
+                menuItem.description,
+                style: TextStyle(
+                  color: AppColors.white.withOpacity(0.9),
+                  fontSize: 14,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+
+              const Spacer(),
+
+              // Precio
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  NeumorphicContainer(
+                    borderRadius: 12,
+                    backgroundColor: AppColors.white.withOpacity(0.2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
                     ),
-                    Text(
-                      '\$${menuItem.price.toStringAsFixed(2)}',
+                    child: Text(
+                      menuItem.category,
                       style: const TextStyle(
                         color: AppColors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  Text(
+                    '\$${menuItem.price.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      color: AppColors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
