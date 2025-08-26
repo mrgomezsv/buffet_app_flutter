@@ -97,9 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: GlassmorphismCard(
                   borderRadius: 16,
-                  backgroundColor: Colors.white,
+                  backgroundColor: AppColors.surface,
                   blur: 20,
-                  opacity: 0.1,
+                  opacity: 0.2,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: SizedBox(
@@ -142,9 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundColor:
                         _currentIndex == index
                             ? AppColors.orange500
-                            : AppColors.gris.withAlpha(77),
+                            : AppColors.textTertiary,
                     blur: 8,
-                    opacity: _currentIndex == index ? 0.3 : 0.1,
+                    opacity: _currentIndex == index ? 0.4 : 0.2,
                     child: Container(),
                   ),
                 ),
@@ -224,7 +224,7 @@ class LunchFragment extends StatelessWidget {
             'Almuerzos',
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
               fontFamily: 'Dancing Script',
-              color: AppColors.gris,
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 20),
@@ -302,7 +302,7 @@ class SnackFragment extends StatelessWidget {
             'Antojitos',
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
               fontFamily: 'Dancing Script',
-              color: AppColors.gris,
+              color: AppColors.textPrimary,
             ),
           ),
           const SizedBox(height: 20),
@@ -345,7 +345,7 @@ class BuffetFragment extends StatelessWidget {
             'Nuestros Servicios',
             style: Theme.of(
               context,
-            ).textTheme.headlineMedium?.copyWith(color: AppColors.orange700),
+            ).textTheme.headlineMedium?.copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 20),
           Expanded(
@@ -389,18 +389,18 @@ class BuffetFragment extends StatelessWidget {
   ) {
     return GlassmorphismCard(
       borderRadius: 20,
-      backgroundColor: Colors.white,
-      blur: 15,
-      opacity: 0.12,
+      backgroundColor: AppColors.surface,
+      blur: 20,
+      opacity: 0.25,
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             GlassmorphismContainer(
               borderRadius: 16,
-              backgroundColor: Colors.white,
-              blur: 10,
-              opacity: 0.08,
+              backgroundColor: AppColors.surfaceLight,
+              blur: 12,
+              opacity: 0.15,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image.asset(
@@ -417,13 +417,16 @@ class BuffetFragment extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: AppColors.black,
+                color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 12),
             Text(
               description,
-              style: const TextStyle(fontSize: 16, color: AppColors.gris),
+              style: const TextStyle(
+                fontSize: 16,
+                color: AppColors.textSecondary,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -431,8 +434,8 @@ class BuffetFragment extends StatelessWidget {
               borderRadius: 12,
               backgroundColor: AppColors.orange500,
               padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-              blur: 12,
-              opacity: 0.25,
+              blur: 15,
+              opacity: 0.3,
               onPressed: () {},
               child: Text(
                 buttonText,
@@ -464,9 +467,9 @@ class ProfileFragment extends StatelessWidget {
             borderRadius: 60,
             width: 120,
             height: 120,
-            backgroundColor: Colors.white,
-            blur: 15,
-            opacity: 0.1,
+            backgroundColor: AppColors.surface,
+            blur: 20,
+            opacity: 0.2,
             child: CircleAvatar(
               radius: 60,
               backgroundImage: const AssetImage(
@@ -479,7 +482,7 @@ class ProfileFragment extends StatelessWidget {
             'Mi Perfil',
             style: Theme.of(
               context,
-            ).textTheme.headlineMedium?.copyWith(color: AppColors.gris),
+            ).textTheme.headlineMedium?.copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 30),
           _buildProfileOption(
@@ -513,8 +516,8 @@ class ProfileFragment extends StatelessWidget {
               borderRadius: 16,
               backgroundColor: AppColors.error,
               padding: const EdgeInsets.symmetric(vertical: 16),
-              blur: 12,
-              opacity: 0.25,
+              blur: 15,
+              opacity: 0.3,
               onPressed: () {
                 context.go('/login');
               },
@@ -543,9 +546,9 @@ class ProfileFragment extends StatelessWidget {
     return GlassmorphismCard(
       margin: const EdgeInsets.only(bottom: 16),
       borderRadius: 16,
-      backgroundColor: Colors.white,
-      blur: 12,
-      opacity: 0.1,
+      backgroundColor: AppColors.surface,
+      blur: 15,
+      opacity: 0.2,
       onTap: onTap,
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -554,19 +557,26 @@ class ProfileFragment extends StatelessWidget {
           backgroundColor: AppColors.orange500,
           width: 50,
           height: 50,
-          blur: 8,
-          opacity: 0.3,
+          blur: 10,
+          opacity: 0.4,
           child: Icon(icon, color: AppColors.white, size: 24),
         ),
         title: Text(
           title,
-          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+            color: AppColors.textPrimary,
+          ),
         ),
         subtitle: Text(
           subtitle,
-          style: const TextStyle(color: AppColors.gris, fontSize: 14),
+          style: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, color: AppColors.gris),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          color: AppColors.textTertiary,
+        ),
       ),
     );
   }

@@ -24,8 +24,8 @@ class GlassmorphismContainer extends StatelessWidget {
     this.width,
     this.height,
     this.backgroundColor,
-    this.blur = 10.0,
-    this.opacity = 0.1,
+    this.blur = 15.0,
+    this.opacity = 0.15,
     this.onTap,
     this.hasBorder = true,
   });
@@ -52,7 +52,7 @@ class GlassmorphismContainer extends StatelessWidget {
           ),
           border:
               hasBorder
-                  ? Border.all(color: Colors.white.withOpacity(0.2), width: 1.5)
+                  ? Border.all(color: Colors.white.withOpacity(0.3), width: 1.5)
                   : null,
           boxShadow: [
             BoxShadow(
@@ -117,8 +117,8 @@ class GlassmorphismCard extends StatelessWidget {
     this.width,
     this.height,
     this.backgroundColor,
-    this.blur = 15.0,
-    this.opacity = 0.15,
+    this.blur = 20.0,
+    this.opacity = 0.2,
     this.onTap,
     this.hasBorder = true,
   });
@@ -146,7 +146,7 @@ class GlassmorphismCard extends StatelessWidget {
           border:
               hasBorder
                   ? Border.all(
-                    color: Colors.white.withOpacity(0.25),
+                    color: Colors.white.withOpacity(0.35),
                     width: 1.5,
                   )
                   : null,
@@ -212,8 +212,8 @@ class GlassmorphismButton extends StatefulWidget {
     this.width,
     this.height,
     this.backgroundColor,
-    this.blur = 12.0,
-    this.opacity = 0.2,
+    this.blur = 15.0,
+    this.opacity = 0.25,
     this.onPressed,
   });
 
@@ -279,7 +279,7 @@ class _GlassmorphismButtonState extends State<GlassmorphismButton>
                   ],
                 ),
                 border: Border.all(
-                  color: Colors.white.withOpacity(0.3),
+                  color: Colors.white.withOpacity(0.4),
                   width: 1.5,
                 ),
                 boxShadow: [
@@ -345,9 +345,9 @@ class GlassmorphismBackground extends StatelessWidget {
           colors: [
             AppColors.background,
             AppColors.background2,
-            AppColors.background.withOpacity(0.8),
+            AppColors.background3,
           ],
-          stops: const [0.0, 0.5, 1.0],
+          stops: const [0.0, 0.6, 1.0],
         ),
       ),
       child: child,

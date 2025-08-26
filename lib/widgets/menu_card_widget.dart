@@ -23,8 +23,8 @@ class MenuCardWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       borderRadius: 20,
       backgroundColor: AppColors.orange500,
-      blur: 15,
-      opacity: 0.2,
+      blur: 20,
+      opacity: 0.3,
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
@@ -45,8 +45,8 @@ class MenuCardWidget extends StatelessWidget {
                 backgroundColor: AppColors.white,
                 width: 60,
                 height: 60,
-                blur: 8,
-                opacity: 0.2,
+                blur: 10,
+                opacity: 0.3,
                 child: Icon(
                   Icons.restaurant_menu,
                   size: 40,
@@ -94,8 +94,8 @@ class MenuCardWidget extends StatelessWidget {
                                 horizontal: 8,
                                 vertical: 4,
                               ),
-                              blur: 6,
-                              opacity: 0.2,
+                              blur: 8,
+                              opacity: 0.3,
                               child: Text(
                                 menuItem.category,
                                 style: const TextStyle(
@@ -142,8 +142,8 @@ class MenuGridCardWidget extends StatelessWidget {
     return GlassmorphismCard(
       borderRadius: 20,
       backgroundColor: AppColors.orange500,
-      blur: 15,
-      opacity: 0.2,
+      blur: 20,
+      opacity: 0.3,
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
@@ -166,8 +166,8 @@ class MenuGridCardWidget extends StatelessWidget {
                   backgroundColor: AppColors.white,
                   width: 60,
                   height: 60,
-                  blur: 8,
-                  opacity: 0.2,
+                  blur: 10,
+                  opacity: 0.3,
                   child: Icon(
                     Icons.restaurant_menu,
                     size: 40,
@@ -216,8 +216,8 @@ class MenuGridCardWidget extends StatelessWidget {
                       horizontal: 8,
                       vertical: 4,
                     ),
-                    blur: 6,
-                    opacity: 0.2,
+                    blur: 8,
+                    opacity: 0.3,
                     child: Text(
                       menuItem.category,
                       style: const TextStyle(
